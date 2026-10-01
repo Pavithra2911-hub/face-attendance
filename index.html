@@ -144,6 +144,13 @@ th,td{padding:10px 9px;border-bottom:1px solid #e5e7eb;text-align:center;white-s
           <div class="input-group"><label>Employee Name</label><input id="employeeName" placeholder="Name"></div>
           <div class="input-group"><label>Password</label><input id="employeePassword" type="password" placeholder="Password"></div>
           <div class="input-group"><label>Department</label><input id="employeeDepartment" placeholder="IT / HR"></div>
+         <div class="input-group">
+  <label>Shift</label>
+  <select id="employeeShift">
+    <option value="S1">Shift 1 — 10:00 AM to 7:00 PM</option>
+    <option value="S2">Shift 2 — 11:00 AM to 8:00 PM</option>
+  </select>
+</div>
         </div></div>
       <div class="card center"><h3>Capture Face</h3><div class="camera-box"><video id="cameraAdd" muted playsinline></video></div><p id="addStatus" class="camera-status"></p><button id="saveEmpBtn" class="btn" onclick="saveEmployee()">Capture Face & Save</button></div>
     </section>
