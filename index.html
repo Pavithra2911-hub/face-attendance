@@ -4,446 +4,2601 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Face Attendance System</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
-body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:#f4f7fb;color:#172033;min-height:100vh}
+
+body{
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+  min-height:100vh
+}
+
 button,input,select{font:inherit}
-.login-wrapper{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;background:linear-gradient(135deg,#eef2ff,#f8fafc)}
-.login-card{width:100%;max-width:420px;background:#fff;padding:32px 26px;border-radius:24px;box-shadow:0 20px 60px rgba(15,23,42,.12)}
-.logo{width:66px;height:66px;margin:0 auto 16px;border-radius:20px;background:linear-gradient(135deg,#4f46e5,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-size:30px}
-h1{text-align:center;font-size:25px}.subtitle{text-align:center;color:#64748b;margin:8px 0 22px;font-size:14px}
-.login-tabs{display:flex;gap:4px;background:#f1f5f9;padding:4px;border-radius:12px;margin-bottom:20px}
-.login-tab{flex:1;border:0;background:transparent;color:#64748b;padding:11px;border-radius:9px;cursor:pointer;font-weight:700}
-.login-tab.active{background:#fff;color:#4f46e5;box-shadow:0 2px 10px rgba(15,23,42,.08)}
-.input-group{margin-bottom:14px}.input-group label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:#334155}
-input{width:100%;padding:12px 13px;border:1px solid #d7deea;border-radius:10px;outline:none;background:#fff;font-size:16px}
-input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
-.btn{border:0;background:#4f46e5;color:#fff;padding:13px 18px;border-radius:11px;cursor:pointer;font-weight:700}
-.btn:hover{background:#4338ca}.btn:disabled{opacity:.6}.btn.full{width:100%}
-.btn.in{background:#16a34a}.btn.in:hover{background:#15803d}.btn.out{background:#ea580c}.btn.out:hover{background:#c2410c}
-.message{text-align:center;margin-top:12px;font-size:13px;min-height:20px}
-.header{height:64px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:sticky;top:0;z-index:10}
-.brand{display:flex;align-items:center;gap:10px}.brand-icon{width:38px;height:38px;border-radius:11px;background:#4f46e5;color:#fff;display:grid;place-items:center}
-.brand-title{font-weight:800}.brand-subtitle{font-size:11px;color:#64748b}
-.user-area{display:flex;align-items:center;gap:10px}.user-info{text-align:right}.user-name{font-weight:700;font-size:13px}.user-role{font-size:11px;color:#64748b}
-.logout-btn{border:1px solid #e2e8f0;background:#fff;color:#dc2626;padding:8px 12px;border-radius:9px;cursor:pointer;font-weight:700}
-.nav{background:#fff;border-bottom:1px solid #e5e7eb;padding:8px 16px;display:flex;gap:6px;overflow-x:auto}
-.nav button{border:0;background:transparent;color:#64748b;padding:9px 14px;border-radius:9px;cursor:pointer;font-weight:700;white-space:nowrap}
-.nav button.active{background:#eef2ff;color:#4f46e5}
-.main{max-width:1100px;margin:20px auto;padding:0 14px}.tab{display:none}.tab.active{display:block}
-.card{background:#fff;border:1px solid #e8ecf2;border-radius:16px;padding:20px;box-shadow:0 5px 20px rgba(15,23,42,.04);margin-bottom:16px}
-.welcome{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border-radius:18px;padding:22px;margin-bottom:16px}.welcome p{opacity:.88;font-size:14px;margin-top:6px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-.stat-card{background:#fff;border:1px solid #e8ecf2;border-radius:14px;padding:16px}.stat-label{color:#64748b;font-size:12px;margin-bottom:6px}.stat-value{font-size:17px;font-weight:800;line-height:1.3}
-.page-title{font-size:20px;font-weight:800;margin-bottom:4px}.page-subtitle{color:#64748b;font-size:13px;margin-bottom:16px}
+
+.login-wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:linear-gradient(135deg,#eef2ff,#f8fafc)
+}
+
+.login-card{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  padding:32px 26px;
+  border-radius:24px;
+  box-shadow:0 20px 60px rgba(15,23,42,.12)
+}
+
+.logo{
+  width:66px;
+  height:66px;
+  margin:0 auto 16px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:30px
+}
+
+h1{text-align:center;font-size:25px}
+
+.subtitle{
+  text-align:center;
+  color:#64748b;
+  margin:8px 0 22px;
+  font-size:14px
+}
+
+.login-tabs{
+  display:flex;
+  gap:4px;
+  background:#f1f5f9;
+  padding:4px;
+  border-radius:12px;
+  margin-bottom:20px
+}
+
+.login-tab{
+  flex:1;
+  border:0;
+  background:transparent;
+  color:#64748b;
+  padding:11px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:700
+}
+
+.login-tab.active{
+  background:#fff;
+  color:#4f46e5;
+  box-shadow:0 2px 10px rgba(15,23,42,.08)
+}
+
+.input-group{margin-bottom:14px}
+
+.input-group label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+  color:#334155
+}
+
+input,select{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #d7deea;
+  border-radius:10px;
+  outline:none;
+  background:#fff;
+  font-size:16px
+}
+
+input:focus,select:focus{
+  border-color:#6366f1;
+  box-shadow:0 0 0 3px rgba(99,102,241,.12)
+}
+
+.btn{
+  border:0;
+  background:#4f46e5;
+  color:#fff;
+  padding:13px 18px;
+  border-radius:11px;
+  cursor:pointer;
+  font-weight:700
+}
+
+.btn:hover{background:#4338ca}
+.btn:disabled{opacity:.6}
+.btn.full{width:100%}
+
+.btn.in{background:#16a34a}
+.btn.in:hover{background:#15803d}
+
+.btn.out{background:#ea580c}
+.btn.out:hover{background:#c2410c}
+
+.message{
+  text-align:center;
+  margin-top:12px;
+  font-size:13px;
+  min-height:20px
+}
+
+.header{
+  height:64px;
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  position:sticky;
+  top:0;
+  z-index:10
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.brand-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:#4f46e5;
+  color:#fff;
+  display:grid;
+  place-items:center
+}
+
+.brand-title{font-weight:800}
+
+.brand-subtitle{
+  font-size:11px;
+  color:#64748b
+}
+
+.user-area{
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.user-info{text-align:right}
+
+.user-name{
+  font-weight:700;
+  font-size:13px
+}
+
+.user-role{
+  font-size:11px;
+  color:#64748b
+}
+
+.logout-btn{
+  border:1px solid #e2e8f0;
+  background:#fff;
+  color:#dc2626;
+  padding:8px 12px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:700
+}
+
+.nav{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  padding:8px 16px;
+  display:flex;
+  gap:6px;
+  overflow-x:auto
+}
+
+.nav button{
+  border:0;
+  background:transparent;
+  color:#64748b;
+  padding:9px 14px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:700;
+  white-space:nowrap
+}
+
+.nav button.active{
+  background:#eef2ff;
+  color:#4f46e5
+}
+
+.main{
+  max-width:1100px;
+  margin:20px auto;
+  padding:0 14px
+}
+
+.tab{display:none}
+.tab.active{display:block}
+
+.card{
+  background:#fff;
+  border:1px solid #e8ecf2;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 5px 20px rgba(15,23,42,.04);
+  margin-bottom:16px
+}
+
+.welcome{
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  color:#fff;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:16px
+}
+
+.welcome p{
+  opacity:.88;
+  font-size:14px;
+  margin-top:6px
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:16px
+}
+
+.stat-card{
+  background:#fff;
+  border:1px solid #e8ecf2;
+  border-radius:14px;
+  padding:16px
+}
+
+.stat-label{
+  color:#64748b;
+  font-size:12px;
+  margin-bottom:6px
+}
+
+.stat-value{
+  font-size:17px;
+  font-weight:800;
+  line-height:1.3
+}
+
+.page-title{
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:4px
+}
+
+.page-subtitle{
+  color:#64748b;
+  font-size:13px;
+  margin-bottom:16px
+}
+
 .center{text-align:center}
-.camera-box{max-width:460px;margin:16px auto;background:#0f172a;border-radius:16px;padding:6px;overflow:hidden}
-video{width:100%;display:block;border-radius:12px;transform:scaleX(-1);background:#000}
-.camera-status{color:#64748b;font-size:14px;min-height:22px;margin:10px 0}.scan-result{font-size:16px;line-height:1.8;min-height:24px;margin:10px 0}
-.success{color:#16a34a;font-weight:700}.error{color:#dc2626;font-weight:700}
-.scan-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:460px;margin:16px auto}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.today-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.today-item{padding:14px;border:1px solid #e5e7eb;border-radius:12px}.today-item span.l{display:block;color:#64748b;font-size:12px;margin-bottom:5px}.today-item b{font-size:18px}
-.table-wrapper{width:100%;overflow-x:auto}table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
-th,td{padding:10px 9px;border-bottom:1px solid #e5e7eb;text-align:center;white-space:nowrap}th{background:#f8fafc;color:#475569}
-.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:700}
-.b-green{background:#dcfce7;color:#15803d}.b-blue{background:#dbeafe;color:#1d4ed8}.b-red{background:#fee2e2;color:#b91c1c}.b-orange{background:#ffedd5;color:#c2410c}
-.rules{color:#64748b;font-size:13px;line-height:1.9}
-.filters{display:flex;gap:8px;flex-wrap:wrap}.filters input{width:auto;flex:1;min-width:140px}
+
+.camera-box{
+  max-width:460px;
+  margin:16px auto;
+  background:#0f172a;
+  border-radius:16px;
+  padding:6px;
+  overflow:hidden
+}
+
+video{
+  width:100%;
+  display:block;
+  border-radius:12px;
+  transform:scaleX(-1);
+  background:#000
+}
+
+.camera-status{
+  color:#64748b;
+  font-size:14px;
+  min-height:22px;
+  margin:10px 0
+}
+
+.scan-result{
+  font-size:16px;
+  line-height:1.8;
+  min-height:24px;
+  margin:10px 0
+}
+
+.success{
+  color:#16a34a;
+  font-weight:700
+}
+
+.error{
+  color:#dc2626;
+  font-weight:700
+}
+
+.scan-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  max-width:460px;
+  margin:16px auto
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px
+}
+
+.today-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+
+.today-item{
+  padding:14px;
+  border:1px solid #e5e7eb;
+  border-radius:12px
+}
+
+.today-item span.l{
+  display:block;
+  color:#64748b;
+  font-size:12px;
+  margin-bottom:5px
+}
+
+.today-item b{font-size:18px}
+
+.table-wrapper{
+  width:100%;
+  overflow-x:auto
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+  font-size:13px
+}
+
+th,td{
+  padding:10px 9px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:center;
+  white-space:nowrap
+}
+
+th{
+  background:#f8fafc;
+  color:#475569
+}
+
+.badge{
+  display:inline-block;
+  padding:3px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700
+}
+
+.b-green{
+  background:#dcfce7;
+  color:#15803d
+}
+
+.b-blue{
+  background:#dbeafe;
+  color:#1d4ed8
+}
+
+.b-red{
+  background:#fee2e2;
+  color:#b91c1c
+}
+
+.b-orange{
+  background:#ffedd5;
+  color:#c2410c
+}
+
+.rules{
+  color:#64748b;
+  font-size:13px;
+  line-height:1.9
+}
+
+.filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap
+}
+
+.filters input{
+  width:auto;
+  flex:1;
+  min-width:140px
+}
+
 @media(max-width:700px){
- .brand-subtitle,.user-info{display:none}
- .stats,.form-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}
- .card{padding:16px}.main{padding:0 10px;margin-bottom:90px}
- .nav{position:fixed;bottom:0;left:0;right:0;z-index:20;border-top:1px solid #e5e7eb;border-bottom:0;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(15,23,42,.06)}
- .nav button{flex:1;padding:10px 6px;font-size:12px}
- .filters input,.filters button{width:100%}
+
+ .brand-subtitle,.user-info{
+   display:none
+ }
+
+ .stats,.form-grid{
+   grid-template-columns:1fr
+ }
+
+ .stats{
+   grid-template-columns:1fr 1fr
+ }
+
+ .card{
+   padding:16px
+ }
+
+ .main{
+   padding:0 10px;
+   margin-bottom:90px
+ }
+
+ .nav{
+   position:fixed;
+   bottom:0;
+   left:0;
+   right:0;
+   z-index:20;
+   border-top:1px solid #e5e7eb;
+   border-bottom:0;
+   justify-content:space-around;
+   padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+   box-shadow:0 -4px 16px rgba(15,23,42,.06)
+ }
+
+ .nav button{
+   flex:1;
+   padding:10px 6px;
+   font-size:12px
+ }
+
+ .filters input,.filters button{
+   width:100%
+ }
 }
 </style>
 </head>
+
 <body>
 
+<!-- LOGIN PAGE -->
 <div id="loginPage" class="login-wrapper">
+
   <div class="login-card">
+
     <div class="logo">◉</div>
+
     <h1>Face Attendance</h1>
-    <p class="subtitle">Secure employee attendance management</p>
+
+    <p class="subtitle">
+      Secure employee attendance management
+    </p>
+
     <div class="login-tabs">
-      <button id="employeeTab" class="login-tab active" onclick="selectLoginType('employee')">Employee</button>
-      <button id="adminTab" class="login-tab" onclick="selectLoginType('admin')">Admin</button>
+
+      <button
+        id="employeeTab"
+        class="login-tab active"
+        onclick="selectLoginType('employee')">
+        Employee
+      </button>
+
+      <button
+        id="adminTab"
+        class="login-tab"
+        onclick="selectLoginType('admin')">
+        Admin
+      </button>
+
     </div>
-    <div class="input-group"><label id="loginIdLabel">Employee ID</label><input id="loginId" placeholder="Enter Employee ID" autocomplete="username"></div>
-    <div class="input-group"><label>Password</label><input id="loginPassword" type="password" placeholder="Enter password" autocomplete="current-password"></div>
-    <button id="loginButton" class="btn full" onclick="login()">Login</button>
+
+    <div class="input-group">
+      <label id="loginIdLabel">Employee ID</label>
+      <input
+        id="loginId"
+        placeholder="Enter Employee ID"
+        autocomplete="username">
+    </div>
+
+    <div class="input-group">
+      <label>Password</label>
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Enter password"
+        autocomplete="current-password">
+    </div>
+
+    <button
+      id="loginButton"
+      class="btn full"
+      onclick="login()">
+      Login
+    </button>
+
     <p id="loginMessage" class="message"></p>
+
   </div>
+
 </div>
 
+
+<!-- APPLICATION -->
 <div id="app" hidden>
+
+  <!-- HEADER -->
   <header class="header">
-    <div class="brand"><div class="brand-icon">◉</div><div><div class="brand-title">Face Attendance</div><div class="brand-subtitle">10:00 AM – 8:00 PM</div></div></div>
-    <div class="user-area"><div class="user-info"><div id="userName" class="user-name"></div><div id="userRole" class="user-role"></div></div><button class="logout-btn" onclick="logout()">Logout</button></div>
+
+    <div class="brand">
+
+      <div class="brand-icon">◉</div>
+
+      <div>
+        <div class="brand-title">
+          Face Attendance
+        </div>
+
+        <div class="brand-subtitle">
+          Shift 1: 10:00 AM – 7:00 PM | Shift 2: 11:00 AM – 8:00 PM
+        </div>
+      </div>
+
+    </div>
+
+    <div class="user-area">
+
+      <div class="user-info">
+
+        <div id="userName" class="user-name"></div>
+
+        <div id="userRole" class="user-role"></div>
+
+      </div>
+
+      <button
+        class="logout-btn"
+        onclick="logout()">
+        Logout
+      </button>
+
+    </div>
+
   </header>
+
+
+  <!-- NAVIGATION -->
   <nav id="nav" class="nav"></nav>
 
+
   <main class="main">
+
+    <!-- EMPLOYEE DASHBOARD -->
     <section id="tab_dashboard" class="tab">
-      <div class="welcome"><h2>Welcome, <span id="welcomeName"></span></h2><p>Mark IN when you arrive and OUT when you leave.</p></div>
-      <div class="stats">
-        <div class="stat-card"><div class="stat-label">Today</div><div id="todayDate" class="stat-value">-</div></div>
-        <div class="stat-card"><div class="stat-label">IN</div><div id="dashIn" class="stat-value">-</div></div>
-        <div class="stat-card"><div class="stat-label">OUT</div><div id="dashOut" class="stat-value">-</div></div>
-      </div>
-      <div class="card"><h3 class="page-title">Today's Attendance</h3><div id="todayStatus">Loading...</div><br><button class="btn" onclick="showTab('scan')">Go to Face Scan</button></div>
-    </section>
 
-    <section id="tab_scan" class="tab">
-      <div class="card center">
-        <h2 class="page-title">Face Scan Attendance</h2>
-        <p class="page-subtitle" id="scanDate">Choose IN or OUT, then look at the camera.</p>
-        <div class="scan-actions">
-          <button class="btn in" onclick="startScan('IN')">📥 Scan IN</button>
-          <button class="btn out" onclick="startScan('OUT')">📤 Scan OUT</button>
+      <div class="welcome">
+
+        <h2>
+          Welcome, <span id="welcomeName"></span>
+        </h2>
+
+        <p>
+          Mark IN when you arrive and OUT when you leave.
+        </p>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Today
+          </div>
+
+          <div id="todayDate" class="stat-value">
+            -
+          </div>
+
         </div>
-        <div id="cameraWrap" class="camera-box" hidden><video id="cameraScan" muted playsinline></video></div>
-        <p id="scanStatus" class="camera-status"></p>
-        <div id="scanResult" class="scan-result"></div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            IN
+          </div>
+
+          <div id="dashIn" class="stat-value">
+            -
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            OUT
+          </div>
+
+          <div id="dashOut" class="stat-value">
+            -
+          </div>
+
+        </div>
+
       </div>
-      <div class="card"><h3>Office Rules</h3><p class="rules">
-        • Office time: 10:00 AM – 8:00 PM (all 7 days are working days)<br>
-        • IN before 10:00 AM → <b>Early</b><br>
-        • IN till 10:20 AM → <b>On Time</b><br>
-        • IN after 10:20 AM → <b>Late</b><br>
-        • OUT before 8:00 PM → <b>Early Out</b><br>
-        • OUT at/after 8:00 PM → <b>On Time</b></p></div>
+
+
+      <div class="card">
+
+        <h3 class="page-title">
+          Today's Attendance
+        </h3>
+
+        <div id="todayStatus">
+          Loading...
+        </div>
+
+        <br>
+
+        <button
+          class="btn"
+          onclick="showTab('scan')">
+          Go to Face Scan
+        </button>
+
+      </div>
+
     </section>
 
+
+    <!-- FACE SCAN -->
+    <section id="tab_scan" class="tab">
+
+      <div class="card center">
+
+        <h2 class="page-title">
+          Face Scan Attendance
+        </h2>
+
+        <p
+          class="page-subtitle"
+          id="scanDate">
+          Choose IN or OUT, then look at the camera.
+        </p>
+
+
+        <div class="scan-actions">
+
+          <button
+            class="btn in"
+            onclick="startScan('IN')">
+            📥 Scan IN
+          </button>
+
+          <button
+            class="btn out"
+            onclick="startScan('OUT')">
+            📤 Scan OUT
+          </button>
+
+        </div>
+
+
+        <div
+          id="cameraWrap"
+          class="camera-box"
+          hidden>
+
+          <video
+            id="cameraScan"
+            muted
+            playsinline>
+          </video>
+
+        </div>
+
+
+        <p
+          id="scanStatus"
+          class="camera-status">
+        </p>
+
+        <div
+          id="scanResult"
+          class="scan-result">
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>
+          Office Rules
+        </h3>
+
+        <p class="rules">
+
+          <b>Shift 1 — 10:00 AM to 7:00 PM</b><br>
+          • IN before 10:00 AM → <b>Early</b><br>
+          • IN till 10:20 AM → <b>On Time</b><br>
+          • IN after 10:20 AM → <b>Late</b><br>
+          • OUT before 7:00 PM → <b>Early Out</b><br>
+          • OUT at/after 7:00 PM → <b>On Time</b><br><br>
+
+          <b>Shift 2 — 11:00 AM to 8:00 PM</b><br>
+          • IN before 11:00 AM → <b>Early</b><br>
+          • IN till 11:20 AM → <b>On Time</b><br>
+          • IN after 11:20 AM → <b>Late</b><br>
+          • OUT before 8:00 PM → <b>Early Out</b><br>
+          • OUT at/after 8:00 PM → <b>On Time</b>
+
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- EMPLOYEE MONTHLY REPORT -->
     <section id="tab_myreport" class="tab">
-      <div class="card"><h2 class="page-title">My Monthly Report</h2><p class="page-subtitle">Your attendance details.</p>
-        <div class="filters"><input id="employeeMonth" type="month"><button class="btn" onclick="loadReport('emp')">Show Report</button></div></div>
-      <div class="card"><h3>Summary</h3><div id="employeeSummary"></div></div>
-      <div class="card"><h3>Daily Details</h3><div id="employeeDetails"></div></div>
-    </section>
 
-    <section id="tab_admin" class="tab">
-      <div class="welcome"><h2>Admin Dashboard</h2><p>Manage employees and monitor attendance.</p></div>
-      <div class="stats">
-        <div class="stat-card"><div class="stat-label">Today</div><div id="adminDate" class="stat-value">-</div></div>
-        <div class="stat-card"><div class="stat-label">Employees</div><div id="adminEmployeeCount" class="stat-value">-</div></div>
-        <div class="stat-card"><div class="stat-label">Present</div><div id="adminPresentCount" class="stat-value">-</div></div>
+      <div class="card">
+
+        <h2 class="page-title">
+          My Monthly Report
+        </h2>
+
+        <p class="page-subtitle">
+          Your attendance details.
+        </p>
+
+        <div class="filters">
+
+          <input
+            id="employeeMonth"
+            type="month">
+
+          <button
+            class="btn"
+            onclick="loadReport('emp')">
+            Show Report
+          </button>
+
+        </div>
+
       </div>
-      <div class="card"><h3>Today's Attendance</h3><div id="adminToday"></div></div>
+
+
+      <div class="card">
+
+        <h3>
+          Summary
+        </h3>
+
+        <div id="employeeSummary"></div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>
+          Daily Details
+        </h3>
+
+        <div id="employeeDetails"></div>
+
+      </div>
+
     </section>
 
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="tab_admin" class="tab">
+
+      <div class="welcome">
+
+        <h2>
+          Admin Dashboard
+        </h2>
+
+        <p>
+          Manage employees and monitor attendance.
+        </p>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Today
+          </div>
+
+          <div
+            id="adminDate"
+            class="stat-value">
+            -
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Employees
+          </div>
+
+          <div
+            id="adminEmployeeCount"
+            class="stat-value">
+            -
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Present
+          </div>
+
+          <div
+            id="adminPresentCount"
+            class="stat-value">
+            -
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>
+          Today's Attendance
+        </h3>
+
+        <div id="adminToday"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ADD EMPLOYEE -->
     <section id="tab_add" class="tab">
-      <div class="card"><h2 class="page-title">Add Employee</h2><p class="page-subtitle">Create login and register face.</p>
+
+      <div class="card">
+
+        <h2 class="page-title">
+          Add Employee
+        </h2>
+
+        <p class="page-subtitle">
+          Create login and register face.
+        </p>
+
+
         <div class="form-grid">
-          <div class="input-group"><label>Employee ID</label><input id="employeeId" placeholder="EMP001"></div>
-          <div class="input-group"><label>Employee Name</label><input id="employeeName" placeholder="Name"></div>
-          <div class="input-group"><label>Password</label><input id="employeePassword" type="password" placeholder="Password"></div>
-          <div class="input-group"><label>Department</label><input id="employeeDepartment" placeholder="IT / HR"></div>
-         <div class="input-group">
-  <label>Shift</label>
-  <select id="employeeShift">
-    <option value="S1">Shift 1 — 10:00 AM to 7:00 PM</option>
-    <option value="S2">Shift 2 — 11:00 AM to 8:00 PM</option>
-  </select>
-</div>
-        </div></div>
-      <div class="card center"><h3>Capture Face</h3><div class="camera-box"><video id="cameraAdd" muted playsinline></video></div><p id="addStatus" class="camera-status"></p><button id="saveEmpBtn" class="btn" onclick="saveEmployee()">Capture Face & Save</button></div>
+
+          <div class="input-group">
+
+            <label>
+              Employee ID
+            </label>
+
+            <input
+              id="employeeId"
+              placeholder="EMP001">
+
+          </div>
+
+
+          <div class="input-group">
+
+            <label>
+              Employee Name
+            </label>
+
+            <input
+              id="employeeName"
+              placeholder="Name">
+
+          </div>
+
+
+          <div class="input-group">
+
+            <label>
+              Password
+            </label>
+
+            <input
+              id="employeePassword"
+              type="password"
+              placeholder="Password">
+
+          </div>
+
+
+          <div class="input-group">
+
+            <label>
+              Department
+            </label>
+
+            <input
+              id="employeeDepartment"
+              placeholder="IT / HR">
+
+          </div>
+
+
+          <!-- SHIFT -->
+          <div class="input-group">
+
+            <label>
+              Shift
+            </label>
+
+            <select id="employeeShift">
+
+              <option value="S1">
+                Shift 1 — 10:00 AM to 7:00 PM
+              </option>
+
+              <option value="S2">
+                Shift 2 — 11:00 AM to 8:00 PM
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="card center">
+
+        <h3>
+          Capture Face
+        </h3>
+
+        <div class="camera-box">
+
+          <video
+            id="cameraAdd"
+            muted
+            playsinline>
+          </video>
+
+        </div>
+
+        <p
+          id="addStatus"
+          class="camera-status">
+        </p>
+
+        <button
+          id="saveEmpBtn"
+          class="btn"
+          onclick="saveEmployee()">
+          Capture Face & Save
+        </button>
+
+      </div>
+
     </section>
 
-    <section id="tab_employees" class="tab"><div class="card"><h2 class="page-title">Employees</h2><div id="employeeList">Loading...</div></div></section>
 
+    <!-- EMPLOYEES -->
+    <section id="tab_employees" class="tab">
+
+      <div class="card">
+
+        <h2 class="page-title">
+          Employees
+        </h2>
+
+        <div id="employeeList">
+          Loading...
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ADMIN REPORT -->
     <section id="tab_report" class="tab">
-      <div class="card"><h2 class="page-title">Monthly Attendance Report</h2><p class="page-subtitle">Search by Employee ID, or Save to Sheet to store all employees in the admin-only "Monthly Report" sheet.</p>
-        <div class="filters"><input id="adminMonth" type="month"><input id="adminEmp" placeholder="Employee ID (optional)"><button class="btn" onclick="loadReport('admin')">Show Report</button><button class="btn out" onclick="loadReport('admin',true)">Save to Sheet</button></div><p id="adminMsg" class="message"></p></div>
-      <div class="card"><h3>Summary</h3><div id="adminSummary"></div></div>
-      <div class="card"><h3>Daily Details</h3><div id="adminDetails"></div></div>
+
+      <div class="card">
+
+        <h2 class="page-title">
+          Monthly Attendance Report
+        </h2>
+
+        <p class="page-subtitle">
+          Search by Employee ID, or Save to Sheet to store all employees in the admin-only "Monthly Report" sheet.
+        </p>
+
+
+        <div class="filters">
+
+          <input
+            id="adminMonth"
+            type="month">
+
+          <input
+            id="adminEmp"
+            placeholder="Employee ID (optional)">
+
+          <button
+            class="btn"
+            onclick="loadReport('admin')">
+            Show Report
+          </button>
+
+          <button
+            class="btn out"
+            onclick="loadReport('admin',true)">
+            Save to Sheet
+          </button>
+
+        </div>
+
+
+        <p
+          id="adminMsg"
+          class="message">
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>
+          Summary
+        </h3>
+
+        <div id="adminSummary"></div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>
+          Daily Details
+        </h3>
+
+        <div id="adminDetails"></div>
+
+      </div>
+
     </section>
+
   </main>
+
 </div>
+
 
 <script>
+
 const API="https://script.google.com/macros/s/AKfycbxNNpEgJRWntmhiopPzbWsFKPgzbQi2u_DNHBPuGGxoPwoNr1xmHoAi6tSJuUkWzo61/exec";
+
 const MODEL_URL="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/";
-let loginType="employee",currentUser=null,credentials=null,stream=null,scanTimer=null,modelsLoaded=false,modelsPromise=null,camToken=0;
+
+let loginType="employee";
+let currentUser=null;
+let credentials=null;
+let stream=null;
+let scanTimer=null;
+let modelsLoaded=false;
+let modelsPromise=null;
+let camToken=0;
+
 const $=id=>document.getElementById(id);
 
+
+/* LOGIN TYPE */
+
 function selectLoginType(t){
+
   loginType=t;
-  $("employeeTab").classList.toggle("active",t==="employee");
-  $("adminTab").classList.toggle("active",t==="admin");
-  $("loginIdLabel").textContent=t==="employee"?"Employee ID":"Admin Username";
-  $("loginId").placeholder=t==="employee"?"Enter Employee ID":"Enter Admin Username";
+
+  $("employeeTab").classList.toggle(
+    "active",
+    t==="employee"
+  );
+
+  $("adminTab").classList.toggle(
+    "active",
+    t==="admin"
+  );
+
+  $("loginIdLabel").textContent=
+    t==="employee"
+      ?"Employee ID"
+      :"Admin Username";
+
+  $("loginId").placeholder=
+    t==="employee"
+      ?"Enter Employee ID"
+      :"Enter Admin Username";
+
   $("loginMessage").textContent="";
 }
 
-/* API call: 30s timeout, auto retry for reads, writes (mark/addEmp) never retry */
+
+/* API CALL */
+
 async function apiCall(data){
-  const tries=(data.act==="mark"||data.act==="addEmp")?1:2;
+
+  const tries=
+    (data.act==="mark"||data.act==="addEmp")
+      ?1
+      :2;
+
   let lastErr;
+
   for(let i=0;i<tries;i++){
-    const c=new AbortController(),to=setTimeout(()=>c.abort(),30000);
+
+    const c=new AbortController();
+
+    const to=setTimeout(
+      ()=>c.abort(),
+      30000
+    );
+
     try{
-      const r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({u:credentials?credentials.u:"",p:credentials?credentials.p:"",...data}),signal:c.signal,redirect:"follow"});
+
+      const r=await fetch(
+        API,
+        {
+          method:"POST",
+          headers:{
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+          body:JSON.stringify({
+            u:credentials?credentials.u:"",
+            p:credentials?credentials.p:"",
+            ...data
+          }),
+          signal:c.signal,
+          redirect:"follow"
+        }
+      );
+
       const t=await r.text();
-      try{return JSON.parse(t)}catch(_){const e=new Error("bad response");e.name="BadResponse";throw e}
-    }catch(e){
+
+      try{
+        return JSON.parse(t);
+      }
+      catch(_){
+        const e=
+          new Error("bad response");
+
+        e.name="BadResponse";
+
+        throw e;
+      }
+
+    }
+    catch(e){
+
       lastErr=e;
-      if(e.name==="BadResponse")break;
-      if(i<tries-1)await new Promise(r=>setTimeout(r,1000));
-    }finally{clearTimeout(to)}
+
+      if(e.name==="BadResponse")
+        break;
+
+      if(i<tries-1)
+        await new Promise(
+          r=>setTimeout(r,1000)
+        );
+
+    }
+    finally{
+
+      clearTimeout(to);
+
+    }
+
   }
+
   throw lastErr;
 }
+
+
+/* NETWORK MESSAGE */
+
 function netMsg(e){
-  if(e.name==="AbortError")return "Server respond pannala (timeout). Internet check panni 1 minute kalichu try pannunga.";
-  if(e.name==="BadResponse")return "API deployment issue: Apps Script > Deploy > Manage deployments > 'Who has access = Anyone' set panni New version deploy pannunga.";
+
+  if(e.name==="AbortError")
+    return "Server respond pannala (timeout). Internet check panni 1 minute kalichu try pannunga.";
+
+  if(e.name==="BadResponse")
+    return "API deployment issue: Apps Script > Deploy > Manage deployments > Who has access = Anyone set panni New version deploy pannunga.";
+
   return "Server connect aagala. API URL / internet check pannunga.";
 }
 
+
+/* LOGIN */
+
 async function login(){
-  const u=$("loginId").value.trim(),p=$("loginPassword").value;
-  if(!u||!p){showLoginMsg("Please enter username and password.","#dc2626");return}
+
+  const u=$("loginId").value.trim();
+
+  const p=$("loginPassword").value;
+
+  if(!u||!p){
+
+    showLoginMsg(
+      "Please enter username and password.",
+      "#dc2626"
+    );
+
+    return;
+  }
+
   credentials={u,p};
-  const btn=$("loginButton");btn.disabled=true;btn.textContent="Logging in...";
-  showLoginMsg("Connecting to server...","#64748b");
+
+  const btn=$("loginButton");
+
+  btn.disabled=true;
+  btn.textContent="Logging in...";
+
+  showLoginMsg(
+    "Connecting to server...",
+    "#64748b"
+  );
+
   try{
-    const r=await apiCall({act:"login"});
-    if(!r.ok){showLoginMsg(r.msg,"#dc2626");return}
-    if(loginType==="admin"&&r.user.role!=="admin"){showLoginMsg("This is not an admin account.","#dc2626");return}
-    if(loginType==="employee"&&r.user.role!=="emp"){showLoginMsg("Please use Admin tab.","#dc2626");return}
+
+    const r=await apiCall({
+      act:"login"
+    });
+
+    if(!r.ok){
+
+      showLoginMsg(
+        r.msg,
+        "#dc2626"
+      );
+
+      return;
+    }
+
+    if(
+      loginType==="admin" &&
+      r.user.role!=="admin"
+    ){
+
+      showLoginMsg(
+        "This is not an admin account.",
+        "#dc2626"
+      );
+
+      return;
+    }
+
+    if(
+      loginType==="employee" &&
+      r.user.role!=="emp"
+    ){
+
+      showLoginMsg(
+        "Please use Admin tab.",
+        "#dc2626"
+      );
+
+      return;
+    }
+
     currentUser=r.user;
-    $("loginPage").hidden=true;$("app").hidden=false;window.scrollTo(0,0);
-    $("userName").textContent=currentUser.name;$("userRole").textContent=currentUser.role==="admin"?"ADMIN":"EMPLOYEE";
+
+    $("loginPage").hidden=true;
+    $("app").hidden=false;
+
+    window.scrollTo(0,0);
+
+    $("userName").textContent=
+      currentUser.name;
+
+    $("userRole").textContent=
+      currentUser.role==="admin"
+        ?"ADMIN"
+        :"EMPLOYEE";
+
     buildNavigation();
-    if(currentUser.role==="emp")loadModels().catch(()=>{});
-  }catch(e){
-    showLoginMsg(netMsg(e),"#dc2626");
-  }finally{btn.disabled=false;btn.textContent="Login"}
+
+    if(currentUser.role==="emp")
+      loadModels().catch(()=>{});
+
+  }
+  catch(e){
+
+    showLoginMsg(
+      netMsg(e),
+      "#dc2626"
+    );
+
+  }
+  finally{
+
+    btn.disabled=false;
+    btn.textContent="Login";
+
+  }
+
 }
-function showLoginMsg(m,c){$("loginMessage").textContent=m;$("loginMessage").style.color=c}
+
+
+/* LOGIN MESSAGE */
+
+function showLoginMsg(m,c){
+
+  $("loginMessage").textContent=m;
+
+  $("loginMessage").style.color=c;
+}
+
+
+/* NAVIGATION */
+
 function buildNavigation(){
-  const menu=currentUser.role==="admin"
-    ?[["admin","Dashboard"],["add","Add Employee"],["employees","Employees"],["report","Report"]]
-    :[["dashboard","Dashboard"],["scan","Face Scan"],["myreport","My Report"]];
-  $("nav").innerHTML=menu.map(x=>`<button data-tab="${x[0]}" onclick="showTab('${x[0]}')">${x[1]}</button>`).join("");
+
+  const menu=
+    currentUser.role==="admin"
+
+      ?[
+        ["admin","Dashboard"],
+        ["add","Add Employee"],
+        ["employees","Employees"],
+        ["report","Report"]
+      ]
+
+      :[
+        ["dashboard","Dashboard"],
+        ["scan","Face Scan"],
+        ["myreport","My Report"]
+      ];
+
+  $("nav").innerHTML=
+    menu
+      .map(
+        x=>
+          `<button data-tab="${x[0]}"
+             onclick="showTab('${x[0]}')">
+             ${x[1]}
+           </button>`
+      )
+      .join("");
+
   showTab(menu[0][0]);
 }
+
+
+/* SHOW TAB */
+
 function showTab(t){
+
   stopCamera();
-  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-  const el=$("tab_"+t);if(el)el.classList.add("active");
-  document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.tab===t));
-  if(t==="dashboard"){$("welcomeName").textContent=currentUser.name;$("todayDate").textContent=todayDisplay();loadToday()}
-  if(t==="admin")loadAdminToday();
-  if(t==="scan"){$("scanDate").textContent=todayDisplay()+" — choose IN or OUT, then look at the camera.";$("cameraWrap").hidden=true;$("scanStatus").textContent="";$("scanResult").innerHTML=""}
-  if(t==="add")startAddCamera();
-  if(t==="employees")loadEmployees();
-  if(t==="myreport"){if(!$("employeeMonth").value)$("employeeMonth").value=currentMonth();loadReport("emp")}
-  if(t==="report"&&!$("adminMonth").value)$("adminMonth").value=currentMonth();
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(
+      x=>x.classList.remove("active")
+    );
+
+  const el=$("tab_"+t);
+
+  if(el)
+    el.classList.add("active");
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(
+      x=>
+        x.classList.toggle(
+          "active",
+          x.dataset.tab===t
+        )
+    );
+
+  if(t==="dashboard"){
+
+    $("welcomeName").textContent=
+      currentUser.name;
+
+    $("todayDate").textContent=
+      todayDisplay();
+
+    loadToday();
+
+  }
+
+  if(t==="admin")
+    loadAdminToday();
+
+  if(t==="scan"){
+
+    $("scanDate").textContent=
+      todayDisplay()+
+      " — choose IN or OUT, then look at the camera.";
+
+    $("cameraWrap").hidden=true;
+
+    $("scanStatus").textContent="";
+
+    $("scanResult").innerHTML="";
+
+  }
+
+  if(t==="add")
+    startAddCamera();
+
+  if(t==="employees")
+    loadEmployees();
+
+  if(t==="myreport"){
+
+    if(!$("employeeMonth").value)
+      $("employeeMonth").value=
+        currentMonth();
+
+    loadReport("emp");
+
+  }
+
+  if(
+    t==="report" &&
+    !$("adminMonth").value
+  )
+    $("adminMonth").value=
+      currentMonth();
+
 }
-function currentMonth(){return new Date().toLocaleDateString("en-CA").slice(0,7)}
-function todayDisplay(){const n=new Date();return n.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"})+" · "+n.toLocaleDateString("en-IN",{weekday:"long"})}
+
+
+/* DATE */
+
+function currentMonth(){
+
+  return new Date()
+    .toLocaleDateString(
+      "en-CA"
+    )
+    .slice(0,7);
+
+}
+
+
+function todayDisplay(){
+
+  const n=new Date();
+
+  return n.toLocaleDateString(
+    "en-IN",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  )
+  +" · "+
+  n.toLocaleDateString(
+    "en-IN",
+    {
+      weekday:"long"
+    }
+  );
+
+}
+
+
+/* LOAD FACE MODELS */
 
 function loadModels(){
-  if(modelsLoaded)return Promise.resolve();
-  if(!modelsPromise)modelsPromise=Promise.all([
-    faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-    faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-    faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
-  ]).then(()=>{modelsLoaded=true}).catch(e=>{modelsPromise=null;throw e});
+
+  if(modelsLoaded)
+    return Promise.resolve();
+
+  if(!modelsPromise)
+
+    modelsPromise=
+      Promise.all([
+
+        faceapi.nets.tinyFaceDetector
+          .loadFromUri(MODEL_URL),
+
+        faceapi.nets.faceLandmark68Net
+          .loadFromUri(MODEL_URL),
+
+        faceapi.nets.faceRecognitionNet
+          .loadFromUri(MODEL_URL)
+
+      ])
+      .then(
+        ()=>{
+          modelsLoaded=true;
+        }
+      )
+      .catch(
+        e=>{
+          modelsPromise=null;
+          throw e;
+        }
+      );
+
   return modelsPromise;
 }
+
+
+/* CAMERA */
+
 async function startCamera(video,status){
-  // Stop any old camera first. Do NOT call stopCamera() after creating
-  // the new token, because stopCamera() increments camToken and would
-  // cancel the new camera request.
+
   stopCamera();
 
   const my=++camToken;
 
   try{
-    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-      throw new Error("Camera API unavailable. Open this page using http://127.0.0.1 or HTTPS.");
+
+    if(
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ){
+
+      throw new Error(
+        "Camera API unavailable. Open this page using http://127.0.0.1 or HTTPS."
+      );
+
     }
 
-    status.textContent="Requesting camera permission...";
+    status.textContent=
+      "Requesting camera permission...";
 
-    // Request the camera first so the browser can show the Allow prompt.
-    const s=await navigator.mediaDevices.getUserMedia({
-      video:{
-        facingMode:"user",
-        width:{ideal:640},
-        height:{ideal:480}
-      },
-      audio:false
-    });
+    const s=
+      await navigator.mediaDevices.getUserMedia(
+        {
+          video:{
+            facingMode:"user",
+            width:{ideal:640},
+            height:{ideal:480}
+          },
+          audio:false
+        }
+      );
 
     if(my!==camToken){
-      s.getTracks().forEach(t=>t.stop());
+
+      s.getTracks()
+        .forEach(t=>t.stop());
+
       throw new Error("Cancelled");
     }
 
     stream=s;
+
     video.srcObject=stream;
+
     await video.play();
 
-    status.textContent="Camera ready. Loading face recognition...";
+    status.textContent=
+      "Camera ready. Loading face recognition...";
 
-    // Load face models after the camera is actually running.
     await loadModels();
 
-    if(my!==camToken){
+    if(my!==camToken)
       throw new Error("Cancelled");
-    }
 
-    status.textContent="Camera ready.";
-  }catch(e){
-    if(my===camToken && stream){
-      stream.getTracks().forEach(t=>t.stop());
+    status.textContent=
+      "Camera ready.";
+
+  }
+  catch(e){
+
+    if(
+      my===camToken &&
+      stream
+    ){
+
+      stream
+        .getTracks()
+        .forEach(t=>t.stop());
+
       stream=null;
+
       video.srcObject=null;
+
     }
 
     if(e.name==="NotAllowedError"){
-      throw new Error("Camera permission denied. Browser site settings-la Camera = Allow pannunga.");
+
+      throw new Error(
+        "Camera permission denied. Browser site settings-la Camera = Allow pannunga."
+      );
+
     }
+
     if(e.name==="NotFoundError"){
-      throw new Error("Camera not found. Webcam connect pannirukka check pannunga.");
+
+      throw new Error(
+        "Camera not found. Webcam connect pannirukka check pannunga."
+      );
+
     }
+
     if(e.name==="NotReadableError"){
-      throw new Error("Camera is busy. Teams, Zoom, WhatsApp or Camera app close pannunga.");
+
+      throw new Error(
+        "Camera is busy. Teams, Zoom, WhatsApp or Camera app close pannunga."
+      );
+
     }
+
     if(e.name==="SecurityError"){
-      throw new Error("Camera blocked by browser security. Use http://127.0.0.1 or HTTPS.");
+
+      throw new Error(
+        "Camera blocked by browser security. Use http://127.0.0.1 or HTTPS."
+      );
+
     }
 
     throw e;
+
   }
+
 }
+
+
+/* STOP CAMERA */
+
 function stopCamera(){
+
   camToken++;
-  if(scanTimer){clearInterval(scanTimer);scanTimer=null}
-  if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
+
+  if(scanTimer){
+
+    clearInterval(scanTimer);
+
+    scanTimer=null;
+
+  }
+
+  if(stream){
+
+    stream
+      .getTracks()
+      .forEach(t=>t.stop());
+
+    stream=null;
+
+  }
+
 }
+
+
+/* FACE DESCRIPTOR */
+
 async function getFaceDescriptor(video){
-  const d=await faceapi.detectSingleFace(video,new faceapi.TinyFaceDetectorOptions({inputSize:320,scoreThreshold:.5})).withFaceLandmarks().withFaceDescriptor();
+
+  const d=
+    await faceapi
+      .detectSingleFace(
+        video,
+        new faceapi.TinyFaceDetectorOptions({
+          inputSize:320,
+          scoreThreshold:.5
+        })
+      )
+      .withFaceLandmarks()
+      .withFaceDescriptor();
+
   return d?d.descriptor:null;
 }
+
+
+/* BADGE */
+
 function badge(s){
-  if(!s||s==="-")return "-";
-  const c={"Early":"b-blue","On Time":"b-green","Late":"b-red","Early Out":"b-orange","Present":"b-green","Absent":"b-red"}[s]||"b-blue";
-  return `<span class="badge ${c}">${escapeHtml(s)}</span>`;
+
+  if(!s||s==="-")
+    return "-";
+
+  const c={
+    "Early":"b-blue",
+    "On Time":"b-green",
+    "Late":"b-red",
+    "Early Out":"b-orange",
+    "Present":"b-green",
+    "Absent":"b-red"
+  }[s]||"b-blue";
+
+  return `
+    <span class="badge ${c}">
+      ${escapeHtml(s)}
+    </span>
+  `;
 }
+
+
+/* FACE SCAN */
 
 async function startScan(type){
-  if(!currentUser||currentUser.role!=="emp")return;
-  const video=$("cameraScan"),status=$("scanStatus"),result=$("scanResult");
-  result.innerHTML="";$("cameraWrap").hidden=false;
+
+  if(
+    !currentUser ||
+    currentUser.role!=="emp"
+  )
+    return;
+
+  const video=$("cameraScan");
+
+  const status=$("scanStatus");
+
+  const result=$("scanResult");
+
+  result.innerHTML="";
+
+  $("cameraWrap").hidden=false;
+
   try{
-    await startCamera(video,status);
-  }catch(e){
+
+    await startCamera(
+      video,
+      status
+    );
+
+  }
+  catch(e){
+
     if(e.message!=="Cancelled"){
-      status.innerHTML=`<span class="error">Camera error: ${escapeHtml(e.message)}</span>`;
+
+      status.innerHTML=
+        `<span class="error">
+          Camera error:
+          ${escapeHtml(e.message)}
+        </span>`;
+
     }
+
     return;
   }
-  if(!currentUser.face){status.innerHTML='<span class="error">Face data not registered.</span>';stopCamera();return}
-  const ref=new Float32Array(JSON.parse(currentUser.face));let busy=false;
-  status.textContent=`Scanning for ${type}... look at the camera.`;
-  scanTimer=setInterval(async()=>{
-    if(busy||!video.videoWidth)return;busy=true;
-    try{
-      const d=await getFaceDescriptor(video);
-      if(!scanTimer){busy=false;return}
-      if(!d)status.textContent="Face not detected.";
-      else if(faceapi.euclideanDistance(d,ref)<.55){
-        clearInterval(scanTimer);scanTimer=null;status.textContent="Face matched. Saving...";
-        try{
-          const r=await apiCall({act:"mark",type});
-          if(r.ok){
-            result.innerHTML=`<div class="success">✓ ${escapeHtml(r.type)} Marked</div><b>${escapeHtml(currentUser.name)}</b><br>${escapeHtml(r.type)} Time: <b>${escapeHtml(r.time)}</b> ${badge(r.status)}`;
-            status.textContent="Done.";
-          }else result.innerHTML=`<span class="error">${escapeHtml(r.msg)}</span>`;
-        }catch(e){result.innerHTML=`<span class="error">${escapeHtml(netMsg(e))}</span>`}
-        stopCamera();$("cameraWrap").hidden=true;
-      }else status.textContent="Face detected, but does not match.";
-    }catch(e){status.textContent="Scan error: "+e.message}
-    busy=false;
-  },700);
-}
-async function startAddCamera(){
-  try{await startCamera($("cameraAdd"),$("addStatus"))}catch(e){if(e.message!=="Cancelled")$("addStatus").textContent="Camera error: "+e.message}
-}
-async function saveEmployee(){
-  const b=$("saveEmpBtn");if(b.disabled)return;b.disabled=true;
-  try{await doSaveEmployee()}finally{b.disabled=false}
-}
-async function doSaveEmployee(){
-  const id=$("employeeId").value.trim(),name=$("employeeName").value.trim(),pass=$("employeePassword").value,dept=$("employeeDepartment").value.trim(),st=$("addStatus");
-  if(!id||!name||!pass||!dept){st.innerHTML='<span class="error">Fill all fields.</span>';return}
-  if(!stream){st.innerHTML='<span class="error">Camera not ready.</span>';return}
-  st.textContent="Capturing face. Keep steady...";
-  const ds=[],v=$("cameraAdd");
-  for(let i=0;i<5;i++){const d=await getFaceDescriptor(v);if(d)ds.push(d);await new Promise(r=>setTimeout(r,300))}
-  if(!ds.length){st.innerHTML='<span class="error">Face not detected.</span>';return}
-  const avg=Array.from(ds[0]).map((_,k)=>ds.reduce((s,d)=>s+d[k],0)/ds.length);
-  st.textContent="Saving...";
-  try{
-    const r=await apiCall({act:"addEmp",id,name,pass,dept,face:JSON.stringify(avg)});
-    if(r.ok){st.innerHTML='<span class="success">✓ Employee added.</span>';["employeeId","employeeName","employeePassword","employeeDepartment"].forEach(i=>$(i).value="")}
-    else st.innerHTML=`<span class="error">${escapeHtml(r.msg)}</span>`;
-  }catch(e){st.innerHTML=`<span class="error">${escapeHtml(netMsg(e))}</span>`}
-}
-async function loadToday(){
-  try{
-    const r=await apiCall({act:"today"});
-    if(!r.ok){$("todayStatus").textContent=r.msg;return}
-    $("dashIn").textContent=r.inTime||"-";$("dashOut").textContent=r.outTime||"-";
-    $("todayStatus").innerHTML=r.inTime
-      ?`<div class="today-grid"><div class="today-item"><span class="l">IN Time</span><b>${escapeHtml(r.inTime)}</b><br>${badge(r.inStatus)}</div><div class="today-item"><span class="l">OUT Time</span><b>${escapeHtml(r.outTime||"Not marked")}</b><br>${badge(r.outStatus)}</div></div>`
-      :"No attendance today. Go to Face Scan and mark IN.";
-  }catch(e){$("todayStatus").textContent=netMsg(e)}
-}
-async function loadAdminToday(){
-  $("adminDate").textContent=todayDisplay();
-  try{
-    const r=await apiCall({act:"adminToday"});
-    if(!r.ok){$("adminToday").textContent=r.msg;return}
-    $("adminEmployeeCount").textContent=r.totalEmployees;$("adminPresentCount").textContent=r.present;
-    $("adminToday").innerHTML=makeTable(["ID","Employee","Dept","IN","IN Status","OUT","OUT Status"],r.rows,[4,6]);
-  }catch(e){$("adminToday").textContent=netMsg(e)}
-}
-async function loadEmployees(){
-  $("employeeList").textContent="Loading...";
-  try{const r=await apiCall({act:"list"});$("employeeList").innerHTML=r.ok?makeTable(["ID","Name","Department"],r.emps):`<span class="error">${escapeHtml(r.msg)}</span>`}
-  catch(e){$("employeeList").textContent=netMsg(e)}
-}
-async function loadReport(who,save){
-  const p=who==="admin"?"admin":"employee",month=$(p+"Month").value;if(!month)return;
-  const S=$(p+"Summary"),D=$(p+"Details");S.textContent="Loading...";D.textContent="Loading...";
-  try{
-    const r=await apiCall({act:"report",month,emp:who==="admin"?$("adminEmp").value.trim():"",save:!!save});
-    if(who==="admin"){$("adminMsg").innerHTML=r.saved?'<span class="success">✓ All employees saved to "Monthly Report" sheet (admin only).</span>':""}
-    if(!r.ok){S.innerHTML=`<span class="error">${escapeHtml(r.msg)}</span>`;D.textContent="";return}
-    S.innerHTML=makeTable(["Employee","Present","Absent","Working Days","Late","Early Out","Attendance %"],r.summary.map(x=>[x.name,x.p,x.a,x.w,x.late,x.eo,x.pct+"%"]));
-    D.innerHTML=makeTable(["Employee","Date","Day","Status","IN","IN Status","OUT","OUT Status"],r.detail,[3,5,7]);
-  }catch(e){S.textContent=netMsg(e);D.textContent=""}
-}
-function makeTable(h,rows,badgeCols){
-  if(!rows||!rows.length)return"No records found.";
-  badgeCols=badgeCols||[];
-  return `<div class="table-wrapper"><table><thead><tr>${h.map(x=>`<th>${escapeHtml(x)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td>${badgeCols.includes(i)?badge(c):escapeHtml(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
-}
-function escapeHtml(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function logout(){stopCamera();currentUser=null;credentials=null;$("app").hidden=true;$("loginPage").hidden=false;$("loginId").value="";$("loginPassword").value="";$("loginMessage").textContent="";selectLoginType("employee")}
 
-/* Warm up Apps Script on page load (avoids cold-start timeout at login) */
-apiCall({act:"ping"}).catch(()=>{});
+  if(!currentUser.face){
+
+    status.innerHTML=
+      '<span class="error">Face data not registered.</span>';
+
+    stopCamera();
+
+    return;
+  }
+
+  const ref=
+    new Float32Array(
+      JSON.parse(currentUser.face)
+    );
+
+  let busy=false;
+
+  status.textContent=
+    `Scanning for ${type}... look at the camera.`;
+
+  scanTimer=
+    setInterval(
+      async()=>{
+
+        if(
+          busy ||
+          !video.videoWidth
+        )
+          return;
+
+        busy=true;
+
+        try{
+
+          const d=
+            await getFaceDescriptor(video);
+
+          if(!scanTimer){
+
+            busy=false;
+
+            return;
+          }
+
+          if(!d){
+
+            status.textContent=
+              "Face not detected.";
+
+          }
+
+          else if(
+            faceapi.euclideanDistance(
+              d,
+              ref
+            )<.55
+          ){
+
+            clearInterval(scanTimer);
+
+            scanTimer=null;
+
+            status.textContent=
+              "Face matched. Saving...";
+
+            try{
+
+              const r=
+                await apiCall({
+                  act:"mark",
+                  type
+                });
+
+              if(r.ok){
+
+                result.innerHTML=
+                  `<div class="success">
+                     ✓ ${escapeHtml(r.type)} Marked
+                   </div>
+                   <b>${escapeHtml(currentUser.name)}</b>
+                   <br>
+                   ${escapeHtml(r.type)}
+                   Time:
+                   <b>${escapeHtml(r.time)}</b>
+                   ${badge(r.status)}`;
+
+                status.textContent="Done.";
+
+              }
+
+              else{
+
+                result.innerHTML=
+                  `<span class="error">
+                    ${escapeHtml(r.msg)}
+                   </span>`;
+
+              }
+
+            }
+            catch(e){
+
+              result.innerHTML=
+                `<span class="error">
+                  ${escapeHtml(netMsg(e))}
+                 </span>`;
+
+            }
+
+            stopCamera();
+
+            $("cameraWrap").hidden=true;
+
+          }
+
+          else{
+
+            status.textContent=
+              "Face detected, but does not match.";
+
+          }
+
+        }
+        catch(e){
+
+          status.textContent=
+            "Scan error: "+e.message;
+
+        }
+
+        busy=false;
+
+      },
+      700
+    );
+
+}
+
+
+/* ADD EMPLOYEE CAMERA */
+
+async function startAddCamera(){
+
+  try{
+
+    await startCamera(
+      $("cameraAdd"),
+      $("addStatus")
+    );
+
+  }
+  catch(e){
+
+    if(e.message!=="Cancelled")
+      $("addStatus").textContent=
+        "Camera error: "+e.message;
+
+  }
+
+}
+
+
+/* SAVE EMPLOYEE */
+
+async function saveEmployee(){
+
+  const b=$("saveEmpBtn");
+
+  if(b.disabled)
+    return;
+
+  b.disabled=true;
+
+  try{
+
+    await doSaveEmployee();
+
+  }
+  finally{
+
+    b.disabled=false;
+
+  }
+
+}
+
+
+/* SAVE EMPLOYEE DATA */
+
+async function doSaveEmployee(){
+
+  const id=
+    $("employeeId").value.trim();
+
+  const name=
+    $("employeeName").value.trim();
+
+  const pass=
+    $("employeePassword").value;
+
+  const dept=
+    $("employeeDepartment").value.trim();
+
+  /* IMPORTANT: SHIFT */
+  const shift=
+    $("employeeShift").value;
+
+  const st=
+    $("addStatus");
+
+
+  /* VALIDATION */
+
+  if(
+    !id ||
+    !name ||
+    !pass ||
+    !dept ||
+    !shift
+  ){
+
+    st.innerHTML=
+      '<span class="error">Fill all fields.</span>';
+
+    return;
+  }
+
+
+  if(!stream){
+
+    st.innerHTML=
+      '<span class="error">Camera not ready.</span>';
+
+    return;
+  }
+
+
+  st.textContent=
+    "Capturing face. Keep steady...";
+
+
+  const ds=[];
+
+  const v=$("cameraAdd");
+
+
+  for(let i=0;i<5;i++){
+
+    const d=
+      await getFaceDescriptor(v);
+
+    if(d)
+      ds.push(d);
+
+    await new Promise(
+      r=>setTimeout(r,300)
+    );
+
+  }
+
+
+  if(!ds.length){
+
+    st.innerHTML=
+      '<span class="error">Face not detected.</span>';
+
+    return;
+  }
+
+
+  const avg=
+    Array
+      .from(ds[0])
+      .map(
+        (_,k)=>
+          ds.reduce(
+            (s,d)=>s+d[k],
+            0
+          )/ds.length
+      );
+
+
+  st.textContent="Saving...";
+
+
+  try{
+
+    /* IMPORTANT: SHIFT SENT TO BACKEND */
+
+    const r=
+      await apiCall({
+        act:"addEmp",
+        id,
+        name,
+        pass,
+        dept,
+        shift,
+        face:JSON.stringify(avg)
+      });
+
+
+    if(r.ok){
+
+      st.innerHTML=
+        '<span class="success">✓ Employee added.</span>';
+
+
+      $("employeeId").value="";
+      $("employeeName").value="";
+      $("employeePassword").value="";
+      $("employeeDepartment").value="";
+
+      /* Reset shift to Shift 1 */
+      $("employeeShift").value="S1";
+
+    }
+
+    else{
+
+      st.innerHTML=
+        `<span class="error">
+          ${escapeHtml(r.msg)}
+         </span>`;
+
+    }
+
+  }
+  catch(e){
+
+    st.innerHTML=
+      `<span class="error">
+        ${escapeHtml(netMsg(e))}
+       </span>`;
+
+  }
+
+}
+
+
+/* TODAY */
+
+async function loadToday(){
+
+  try{
+
+    const r=
+      await apiCall({
+        act:"today"
+      });
+
+    if(!r.ok){
+
+      $("todayStatus").textContent=
+        r.msg;
+
+      return;
+    }
+
+    $("dashIn").textContent=
+      r.inTime||"-";
+
+    $("dashOut").textContent=
+      r.outTime||"-";
+
+
+    $("todayStatus").innerHTML=
+      r.inTime
+
+        ?
+
+        `<div class="today-grid">
+
+          <div class="today-item">
+
+            <span class="l">
+              IN Time
+            </span>
+
+            <b>
+              ${escapeHtml(r.inTime)}
+            </b>
+
+            <br>
+
+            ${badge(r.inStatus)}
+
+          </div>
+
+
+          <div class="today-item">
+
+            <span class="l">
+              OUT Time
+            </span>
+
+            <b>
+              ${escapeHtml(
+                r.outTime ||
+                "Not marked"
+              )}
+            </b>
+
+            <br>
+
+            ${badge(r.outStatus)}
+
+          </div>
+
+        </div>`
+
+        :
+
+        "No attendance today. Go to Face Scan and mark IN.";
+
+  }
+  catch(e){
+
+    $("todayStatus").textContent=
+      netMsg(e);
+
+  }
+
+}
+
+
+/* ADMIN TODAY */
+
+async function loadAdminToday(){
+
+  $("adminDate").textContent=
+    todayDisplay();
+
+  try{
+
+    const r=
+      await apiCall({
+        act:"adminToday"
+      });
+
+    if(!r.ok){
+
+      $("adminToday").textContent=
+        r.msg;
+
+      return;
+    }
+
+    $("adminEmployeeCount").textContent=
+      r.totalEmployees;
+
+    $("adminPresentCount").textContent=
+      r.present;
+
+
+    $("adminToday").innerHTML=
+      makeTable(
+        [
+          "ID",
+          "Employee",
+          "Dept",
+          "IN",
+          "IN Status",
+          "OUT",
+          "OUT Status"
+        ],
+        r.rows,
+        [4,6]
+      );
+
+  }
+  catch(e){
+
+    $("adminToday").textContent=
+      netMsg(e);
+
+  }
+
+}
+
+
+/* EMPLOYEE LIST */
+
+async function loadEmployees(){
+
+  $("employeeList").textContent=
+    "Loading...";
+
+  try{
+
+    const r=
+      await apiCall({
+        act:"list"
+      });
+
+    $("employeeList").innerHTML=
+      r.ok
+
+        ?
+
+        makeTable(
+          [
+            "ID",
+            "Name",
+            "Department"
+          ],
+          r.emps
+        )
+
+        :
+
+        `<span class="error">
+          ${escapeHtml(r.msg)}
+         </span>`;
+
+  }
+  catch(e){
+
+    $("employeeList").textContent=
+      netMsg(e);
+
+  }
+
+}
+
+
+/* REPORT */
+
+async function loadReport(
+  who,
+  save
+){
+
+  const p=
+    who==="admin"
+      ?"admin"
+      :"employee";
+
+  const month=
+    $(p+"Month").value;
+
+  if(!month)
+    return;
+
+  const S=
+    $(p+"Summary");
+
+  const D=
+    $(p+"Details");
+
+  S.textContent="Loading...";
+  D.textContent="Loading...";
+
+
+  try{
+
+    const r=
+      await apiCall({
+
+        act:"report",
+
+        month,
+
+        emp:
+          who==="admin"
+            ?$("adminEmp").value.trim()
+            :"",
+
+        save:!!save
+
+      });
+
+
+    if(who==="admin"){
+
+      $("adminMsg").innerHTML=
+        r.saved
+
+          ?
+
+          '<span class="success">✓ All employees saved to "Monthly Report" sheet (admin only).</span>'
+
+          :
+
+          "";
+
+    }
+
+
+    if(!r.ok){
+
+      S.innerHTML=
+        `<span class="error">
+          ${escapeHtml(r.msg)}
+         </span>`;
+
+      D.textContent="";
+
+      return;
+    }
+
+
+    S.innerHTML=
+      makeTable(
+        [
+          "Employee",
+          "Present",
+          "Absent",
+          "Working Days",
+          "Late",
+          "Early Out",
+          "Attendance %"
+        ],
+
+        r.summary.map(
+          x=>[
+            x.name,
+            x.p,
+            x.a,
+            x.w,
+            x.late,
+            x.eo,
+            x.pct+"%"
+          ]
+        )
+      );
+
+
+    D.innerHTML=
+      makeTable(
+        [
+          "Employee",
+          "Date",
+          "Day",
+          "Status",
+          "IN",
+          "IN Status",
+          "OUT",
+          "OUT Status"
+        ],
+
+        r.detail,
+
+        [3,5,7]
+      );
+
+  }
+  catch(e){
+
+    S.textContent=
+      netMsg(e);
+
+    D.textContent="";
+
+  }
+
+}
+
+
+/* TABLE */
+
+function makeTable(
+  h,
+  rows,
+  badgeCols
+){
+
+  if(
+    !rows ||
+    !rows.length
+  )
+    return "No records found.";
+
+  badgeCols=
+    badgeCols||[];
+
+
+  return `
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            ${h
+              .map(
+                x=>
+                  `<th>
+                    ${escapeHtml(x)}
+                   </th>`
+              )
+              .join("")
+            }
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          ${
+            rows
+              .map(
+                r=>
+                  `<tr>
+                    ${
+                      r
+                        .map(
+                          (c,i)=>
+                            `<td>
+                              ${
+                                badgeCols.includes(i)
+                                  ?badge(c)
+                                  :escapeHtml(c)
+                              }
+                            </td>`
+                        )
+                        .join("")
+                    }
+                   </tr>`
+              )
+              .join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHtml(v){
+
+  return String(v??"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+  stopCamera();
+
+  currentUser=null;
+
+  credentials=null;
+
+  $("app").hidden=true;
+
+  $("loginPage").hidden=false;
+
+  $("loginId").value="";
+
+  $("loginPassword").value="";
+
+  $("loginMessage").textContent="";
+
+  selectLoginType("employee");
+
+}
+
+
+/* WARM UP APPS SCRIPT */
+
+apiCall({
+  act:"ping"
+}).catch(()=>{});
+
 </script>
+
 </body>
 </html>
